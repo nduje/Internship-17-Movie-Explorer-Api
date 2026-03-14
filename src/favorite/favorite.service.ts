@@ -1,26 +1,62 @@
-import { Injectable } from '@nestjs/common';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { FavoriteDto } from './dto/favorite.dto';
 
 @Injectable()
 export class FavoriteService {
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return 'This action adds a new favorite';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createFavoriteDto: FavoriteDto) {
+    const { movieId } = createFavoriteDto;
+
+    const movie = await this.prisma.movie.findUnique({
+      where: { id: movieId },
+    });
+
+    if (!movie) {
+      throw new NotFoundException(`Movie with ID ${movieId} does not exist`);
+    }
+
+    const existingFavorite = await this.prisma.favorite.findUnique({
+      where: { movieId },
+    });
+
+    if (existingFavorite) {
+      throw new BadRequestException(
+        `Movie with ID ${movieId} is already in favorites`,
+      );
+    }
+
+    return this.prisma.favorite.create({
+      data: { movieId },
+    });
   }
 
-  findAll() {
-    return `This action returns all favorite`;
+  async findAll() {
+    return this.prisma.favorite.findMany({
+      include: {
+        movie: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} favorite`;
-  }
+  async remove(removeFavoriteDto: FavoriteDto) {
+    const { movieId } = removeFavoriteDto;
 
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
-    return `This action updates a #${id} favorite`;
-  }
+    const favorite = await this.prisma.favorite.findUnique({
+      where: { movieId },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} favorite`;
+    if (!favorite) {
+      throw new NotFoundException(
+        `Favorite for movie with ID ${movieId} does not exist`,
+      );
+    }
+
+    return this.prisma.favorite.delete({ where: { movieId } });
   }
 }

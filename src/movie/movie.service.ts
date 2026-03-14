@@ -9,6 +9,7 @@ export class MovieService {
     return this.prisma.movie.findMany({
       include: {
         genres: true,
+        favorite: true,
       },
     });
   }
@@ -18,6 +19,7 @@ export class MovieService {
       where: { id },
       include: {
         genres: true,
+        favorite: true,
       },
     });
   }

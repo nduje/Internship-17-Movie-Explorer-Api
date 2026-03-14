@@ -6,4 +6,10 @@ export class Genre {
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
 }

@@ -9,9 +9,4 @@ export class GenreController {
   findAll() {
     return this.genreService.findAll();
   }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.genreService.findOne(+id);
-  }
 }

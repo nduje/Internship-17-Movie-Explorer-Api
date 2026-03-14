@@ -8,10 +8,4 @@ export class GenreService {
   findAll() {
     return this.prisma.genre.findMany();
   }
-
-  findOne(id: number) {
-    return this.prisma.genre.findUnique({
-      where: { id },
-    });
-  }
 }

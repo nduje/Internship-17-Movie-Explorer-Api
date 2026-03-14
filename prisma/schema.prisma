@@ -24,7 +24,7 @@ model Movie {
   plot     String
 
   genres    Genre[]
-  favorites Favorite[]
+  favorite  Favorite?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -42,7 +42,7 @@ model Genre {
 
 model Favorite {
   id      Int   @id @default(autoincrement())
-  movieId Int
+  movieId Int   @unique
   
   movie   Movie @relation(fields: [movieId], references: [id])
 

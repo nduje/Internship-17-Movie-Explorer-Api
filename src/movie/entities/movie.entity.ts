@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Favorite } from 'src/favorite/entities/favorite.entity';
 import { Genre } from 'src/genre/entities/genre.entity';
 
 export class Movie {
@@ -28,6 +29,9 @@ export class Movie {
 
   @ApiProperty({ type: () => [Genre] })
   genres: Genre[];
+
+  @ApiProperty({ type: () => Favorite, nullable: true })
+  favorite: Favorite | null;
 
   @ApiProperty()
   createdAt: Date;
