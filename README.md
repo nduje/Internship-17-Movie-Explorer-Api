@@ -46,7 +46,8 @@ The goal of this task is to build a clean, modular backend that integrates with 
 
 1. Clone repository (`git clone <repository-url>`)
 2. Install dependencies (`npm install`)
-3. Start PostgreSQL with Docker
+3. Start PostgreSQL with Docker (`docker-compose up -d`)
+   Make sure the database host, port, user, password, and database name match `.env`
 4. Run Prisma migrations (`npx prisma migrate dev`)
 5. Seed the database
 
@@ -55,5 +56,6 @@ npm install -D tsx typescript @types/node
 npx prisma db seed
 ```
 
-6. Start the development server (`npm run start:dev`)
-7. Access Swagger documentation (`http://localhost:3000/api`)
+6. Generate Prisma client (`npx prisma generate`)
+7. Start the development server (`npm run start:dev`)
+8. Access Swagger documentation (`http://localhost:<port>/api`)
