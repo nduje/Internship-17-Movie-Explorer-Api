@@ -42,6 +42,41 @@ The goal of this task is to build a clean, modular backend that integrates with 
 - Loading, error, and empty states remain handled on the frontend
 - Using **React Query** (`@tanstack/react-query`) for API calls instead of manual fetching
 
+---
+
+### DUMP Internship - NestJS #2
+
+## Task
+
+This task extends the **Movie Explorer API** with **authentication and authorization**.
+
+## Features
+
+**Backend Architecture**
+
+- Added a `User` model with roles (`admin`, `user`)
+- Implemented **registration** and **login** endpoints returning **JWT tokens**
+- Passwords are **hashed before storing**
+
+**Access Levels**
+
+- **Public** – List movies and fetch a single movie
+- **Authenticated user** – Manage personal favorites (user ID taken from JWT)
+- **Admin** – Create, update, and delete movies
+
+**Frontend**
+
+- Added **login and registration**
+- JWT token stored on the client and sent with protected requests
+- Added a page for creating, editing, and deleting movies (currently visible to all users)
+
+**Bonus**
+
+Brute-force protection on the login endpoint using **@nestjs/throttler**  
+(5 failed attempts per minute → 15 minute block).
+
+---
+
 ## Setup
 
 1. Clone repository (`git clone <repository-url>`)
