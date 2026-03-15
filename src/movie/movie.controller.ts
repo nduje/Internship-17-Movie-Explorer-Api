@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { ApiOkResponse } from '@nestjs/swagger';
 
@@ -26,7 +18,7 @@ export class MovieController {
   @ApiOkResponse({
     description: 'Fetch movie',
   })
-  findOne(@Param('id') id: string) {
-    return this.movieService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.movieService.findOne(id);
   }
 }
