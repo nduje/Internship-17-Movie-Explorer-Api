@@ -11,11 +11,6 @@ export class FavoriteController {
     return this.favoriteService.create(createFavoriteDto);
   }
 
-  @Get()
-  findAll() {
-    return this.favoriteService.findAll();
-  }
-
   @Delete()
   remove(@Body() removeFavoriteDto: FavoriteDto) {
     return this.favoriteService.remove(removeFavoriteDto);

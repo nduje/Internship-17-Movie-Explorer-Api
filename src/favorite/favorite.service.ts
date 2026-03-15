@@ -36,14 +36,6 @@ export class FavoriteService {
     });
   }
 
-  async findAll() {
-    return this.prisma.favorite.findMany({
-      include: {
-        movie: true,
-      },
-    });
-  }
-
   async remove(removeFavoriteDto: FavoriteDto) {
     const { movieId } = removeFavoriteDto;
 
