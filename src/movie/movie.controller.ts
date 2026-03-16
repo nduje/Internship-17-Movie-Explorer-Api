@@ -1,6 +1,18 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { CreateMovieDto } from './dto/create-movie.dto';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
 @Controller('movie')
 export class MovieController {
@@ -72,5 +84,32 @@ export class MovieController {
   })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.movieService.findOne(id);
+  }
+
+  @Post()
+  @ApiOkResponse({
+    description: 'Create movie',
+  })
+  create(@Body() CreateMovieDto: CreateMovieDto) {
+    return this.movieService.create(CreateMovieDto);
+  }
+
+  @Patch(':id')
+  @ApiOkResponse({
+    description: 'Update movie',
+  })
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateMovieDto: UpdateMovieDto,
+  ) {
+    return this.movieService.update(id, UpdateMovieDto);
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({
+    description: 'Delete movie',
+  })
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.movieService.remove(id);
   }
 }
