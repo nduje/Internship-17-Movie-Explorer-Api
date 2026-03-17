@@ -10,8 +10,8 @@ import { FavoriteDto } from './dto/favorite.dto';
 export class FavoriteService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createFavoriteDto: FavoriteDto) {
-    const { movieId, userId } = createFavoriteDto;
+  async create(userId: number, createFavoriteDto: FavoriteDto) {
+    const { movieId } = createFavoriteDto;
 
     const movie = await this.prisma.movie.findUnique({
       where: { id: movieId },
@@ -36,8 +36,8 @@ export class FavoriteService {
     });
   }
 
-  async remove(removeFavoriteDto: FavoriteDto) {
-    const { movieId, userId } = removeFavoriteDto;
+  async remove(userId: number, removeFavoriteDto: FavoriteDto) {
+    const { movieId } = removeFavoriteDto;
 
     const favorite = await this.prisma.favorite.findUnique({
       where: { userId_movieId: { userId, movieId } },

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { FavoriteService } from './favorite.service';
 import { FavoriteDto } from './dto/favorite.dto';
 import { UserAuthGuard } from 'src/user/user-auth.guard';
@@ -11,14 +19,16 @@ export class FavoriteController {
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Post()
-  create(@Body() createFavoriteDto: FavoriteDto) {
-    return this.favoriteService.create(createFavoriteDto);
+  create(@Req() req: any, @Body() createFavoriteDto: FavoriteDto) {
+    const userId = req.user.id;
+    return this.favoriteService.create(userId, createFavoriteDto);
   }
 
   @UseGuards(UserAuthGuard)
   @ApiBearerAuth()
   @Delete()
-  remove(@Body() removeFavoriteDto: FavoriteDto) {
-    return this.favoriteService.remove(removeFavoriteDto);
+  remove(@Req() req: any, @Body() removeFavoriteDto: FavoriteDto) {
+    const userId = req.user.id;
+    return this.favoriteService.remove(userId, removeFavoriteDto);
   }
 }
