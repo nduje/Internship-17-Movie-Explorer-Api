@@ -77,6 +77,18 @@ Brute-force protection on the login endpoint using **@nestjs/throttler**
 
 ---
 
+## Test Users
+
+The following users are pre-created for testing authentication and authorization:
+
+| Role  | Email           | Password    |
+| ----- | --------------- | ----------- |
+| USER  | user@user.com   | password123 |
+| ADMIN | admin@admin.com | password123 |
+
+- **USER** can manage their own favorites
+- **ADMIN** has full access to create, update, and delete movies
+
 ## Setup
 
 1. Clone repository (`git clone <repository-url>`)
