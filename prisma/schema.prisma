@@ -13,6 +13,18 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
+  password String
+  role     Role     @default(USER)
+
+  favorites Favorite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Movie {
   id       Int      @id @default(autoincrement())
   title    String   @unique
@@ -24,7 +36,7 @@ model Movie {
   plot     String
 
   genres    Genre[]
-  favorite  Favorite?
+  favorite  Favorite[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -41,11 +53,21 @@ model Genre {
 }
 
 model Favorite {
-  id      Int   @id @default(autoincrement())
-  movieId Int   @unique
-  
-  movie   Movie @relation(fields: [movieId], references: [id])
+  id      Int @id @default(autoincrement())
+
+  userId  Int
+  movieId Int
+
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, movieId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
