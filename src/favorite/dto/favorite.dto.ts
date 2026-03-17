@@ -5,4 +5,8 @@ export class FavoriteDto {
   @ApiProperty()
   @IsNumber()
   movieId: number;
+
+  @ApiProperty()
+  @IsNumber()
+  userId: number;
 }

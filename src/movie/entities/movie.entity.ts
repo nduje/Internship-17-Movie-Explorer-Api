@@ -30,8 +30,8 @@ export class Movie {
   @ApiProperty({ type: () => [Genre] })
   genres: Genre[];
 
-  @ApiProperty({ type: () => Favorite, nullable: true })
-  favorite: Favorite | null;
+  @ApiProperty({ type: () => [Favorite] })
+  favorites: Favorite[];
 
   @ApiProperty()
   createdAt: Date;

@@ -11,7 +11,7 @@ export class FavoriteService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createFavoriteDto: FavoriteDto) {
-    const { movieId } = createFavoriteDto;
+    const { movieId, userId } = createFavoriteDto;
 
     const movie = await this.prisma.movie.findUnique({
       where: { id: movieId },
@@ -22,7 +22,7 @@ export class FavoriteService {
     }
 
     const existingFavorite = await this.prisma.favorite.findUnique({
-      where: { movieId },
+      where: { userId_movieId: { userId, movieId } },
     });
 
     if (existingFavorite) {
@@ -32,15 +32,15 @@ export class FavoriteService {
     }
 
     return this.prisma.favorite.create({
-      data: { movieId },
+      data: { userId, movieId },
     });
   }
 
   async remove(removeFavoriteDto: FavoriteDto) {
-    const { movieId } = removeFavoriteDto;
+    const { movieId, userId } = removeFavoriteDto;
 
     const favorite = await this.prisma.favorite.findUnique({
-      where: { movieId },
+      where: { userId_movieId: { userId, movieId } },
     });
 
     if (!favorite) {
@@ -49,6 +49,8 @@ export class FavoriteService {
       );
     }
 
-    return this.prisma.favorite.delete({ where: { movieId } });
+    return this.prisma.favorite.delete({
+      where: { userId_movieId: { userId, movieId } },
+    });
   }
 }

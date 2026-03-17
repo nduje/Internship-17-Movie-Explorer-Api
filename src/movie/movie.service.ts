@@ -36,15 +36,18 @@ export class MovieService {
     });
   }
 
-  findFavorites(filters?: {
-    search?: string;
-    sortBy?: string;
-    genre?: string;
-  }) {
+  findFavorites(
+    userId: number,
+    filters?: {
+      search?: string;
+      sortBy?: string;
+      genre?: string;
+    },
+  ) {
     const { search, sortBy = '', genre = '' } = filters || {};
 
     const where: any = {
-      favorite: { isNot: null },
+      favorite: { some: { userId } },
     };
 
     if (search) {
