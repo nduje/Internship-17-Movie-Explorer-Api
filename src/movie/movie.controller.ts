@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { MovieService } from './movie.service';
-import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { AdminAuthGuard } from 'src/user/admin-auth.guard';
@@ -53,6 +53,7 @@ export class MovieController {
   }
 
   @UseGuards(UserAuthGuard)
+  @ApiBearerAuth()
   @Get('favorites')
   @ApiOkResponse({
     description:
@@ -95,6 +96,7 @@ export class MovieController {
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Post()
   @ApiOkResponse({
     description: 'Create movie',
@@ -104,6 +106,7 @@ export class MovieController {
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
   @ApiOkResponse({
     description: 'Update movie',
@@ -116,6 +119,7 @@ export class MovieController {
   }
 
   @UseGuards(AdminAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   @ApiOkResponse({
     description: 'Delete movie',
